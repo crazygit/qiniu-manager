@@ -1,0 +1,1 @@
+web: qiniu-manager
