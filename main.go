@@ -13,17 +13,16 @@ import (
 
 var QiniuClient *kodo.Client
 
+type Uptoken struct {
+	Value string `json:"uptoken"`
+}
+
 func init() {
 	qiniuAccessKey := os.Getenv("QINIU_ACCESS_KEY")
 	qiniuSecretKey := os.Getenv("QINIU_SECRET_KEY")
 	kodo.SetMac(qiniuAccessKey, qiniuSecretKey)
 	zone := 0
 	QiniuClient = kodo.New(zone, nil)
-}
-
-func index(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/html")
-	w.Write([]byte("building..."))
 }
 
 func main() {
@@ -39,9 +38,9 @@ func main() {
 		fmt.Println(err)
 	}
 }
-
-type Uptoken struct {
-	Token string `json:"uptoken"`
+func index(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html")
+	w.Write([]byte("building..."))
 }
 
 func makeUptoken(w http.ResponseWriter, r *http.Request) {
@@ -56,7 +55,7 @@ func makeUptoken(w http.ResponseWriter, r *http.Request) {
 		Expires:    3600,
 		InsertOnly: 1, // 不允许覆盖或修改已经存在的同名文件
 	}
-	token, err := json.Marshal(Uptoken{Token: QiniuClient.MakeUptoken(&putpolicy)})
+	token, err := json.Marshal(Uptoken{Value: QiniuClient.MakeUptoken(&putpolicy)})
 	if err != nil {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return

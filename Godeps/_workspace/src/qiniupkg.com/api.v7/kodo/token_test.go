@@ -49,4 +49,3 @@ func TestGetPrivateUrl(t *testing.T) {
 		t.Fatal("http.Get etag failed:", etag, etagExpected)
 	}
 }
-

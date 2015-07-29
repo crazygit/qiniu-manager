@@ -31,4 +31,3 @@ NewBuffer 创建一个可随机读写的内存文件，支持 ReadAt/WriteAt 方
 	...
 */
 package bytes
-

@@ -137,4 +137,3 @@ func testBatch(t *testing.T) {
 		t.Fatal("len(rets) != 3")
 	}
 }
-
